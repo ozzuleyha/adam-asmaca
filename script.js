@@ -1,8 +1,15 @@
         const word = "peynir";
         let dogruBilinen = [];
         let canHakki = 6;
+    
+    function sameMembers(arr1, arr2) {
+            const set1 = new Set(arr1);
+            const set2 = new Set(arr2);
+            return arr1.every(item => set2.has(item)) &&
+                arr2.every(item => set1.has(item))
+        } //2 farklı array
 
-  function buttonClick(param) {
+function buttonClick(param) {
     let chars = [];
     let wordArr = word.split("");
     let text = document.getElementById("textInputu");
@@ -28,6 +35,11 @@
             break;
         case 0:
             adam.innerText = "Adamin basi silindi. Oyunu kaybettiniz";
+            const reloadBtn = document.getElementById("reloadBtn");
+            reloadBtn.style.display = "block";
+            reloadBtn.addEventListener("click", function() {
+                window.location.reload();
+              });
             return false;
             break;
         default:
@@ -43,15 +55,16 @@
         chars.forEach(element => {
             let button = document.getElementById(element);
             let kontrol = wordArr.includes(element);
-            if (kontrol) {
+            if ((kontrol)) {
               dogruBilinen.push(element);
               dogruBilinenHarfler.innerText+= " " + element + ",";
+              console.log("same members", sameMembers(wordArr, dogruBilinen));
             }
             if (kontrol) {
                 console.log("kontrol", kontrol);
                 console.log("dogrubilinen", dogruBilinen);
                 
-                if (dogruBilinen === wordArr) {
+                if (sameMembers(wordArr, dogruBilinen)) {
                     console.log("kelime tamamlandi");
                 }
                 sonuc.innerText = "Dogru bildiniz";
